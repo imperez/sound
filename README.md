@@ -1,4 +1,6 @@
 @imperez/sound
 
 Intall
-`npm i @imperez/sound`
+```bash
+npm i @imperez/sound
+```
