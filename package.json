@@ -1,0 +1,21 @@
+{
+  "name": "@imperez/sound",
+  "version": "1.0.0",
+  "description": "A simple library to play sounds",
+  "type": "module",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imperez/sound.git"
+  },
+  "author": "Rich Perez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imperez/sound/issues"
+  },
+  "homepage": "https://github.com/imperez/sound#readme"
+}
