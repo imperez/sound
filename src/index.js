@@ -11,7 +11,6 @@ const gainNode = context.createGain();
 gainNode.connect(context.destination);
 
 /**
- *
  * @param {String} file
  */
 const init = (file) => {
@@ -28,8 +27,6 @@ const init = (file) => {
 }
 
 const play = () => {
-    const state = context.state;
-
     if (hasStarted) {
         context.resume();
     }
