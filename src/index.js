@@ -1,10 +1,8 @@
-import { create } from "./context";
-
-const context = create();
+import { create } from "./context.js";
 
 /** @type {AudioBuffer} buffer */
 let buffer;
-
+const context = create();
 
 /**
  *
@@ -22,7 +20,7 @@ const init = (file) => {
 const play = () => {
     const source = context.createBufferSource();
 
-    source.buffer = audioBuffer;
+    source.buffer = buffer;
     source.connect(context.destination);
     source.start();
 };

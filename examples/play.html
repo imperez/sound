@@ -6,15 +6,16 @@
         <meta charset="utf-8">
         <meta name="viewport" content="user-scalable=no">
 
-        <script src="../src/index.js"></script>
+        <script type="module">
+            import * as sound from "./../src/index.js";
+
+            sound.init('./ding.mp3');
+            window.playSound = () => {
+                sound.play();
+            }
+        </script>
     </head>
     <body>
-        <button>Play</button>
-
-        <script>
-            document.addEventListener('onload', function () {
-
-            });
-        </script>
+        <button onclick="playSound()">Play</button>
     </body>
 </html>
