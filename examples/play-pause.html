@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Example - Play</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="user-scalable=no">
+
+        <script type="module">
+            import * as sound from "./../src/index.js";
+
+            sound.init('./ding.mp3');
+            window.playSound = () => {
+                sound.play();
+            }
+            window.pauseSound = () => {
+                sound.pause();
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="playSound()">Play</button>
+        <button onclick="pauseSound()">Pause</button>
+    </body>
+</html>
