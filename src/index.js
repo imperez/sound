@@ -1,28 +1,27 @@
 import { create } from "./context.js";
+import { load } from "./loader.js";
 
-/** @type {AudioBuffer} buffer */
-let buffer;
 let originalVolume = 1;
 let hasStarted = false;
 
 const context = create();
-const source = context.createBufferSource();
-const gainNode = context.createGain();
-gainNode.connect(context.destination);
+
+/** @type {AudioBufferSourceNode} source */
+let source;
+
+/** @type {GainNode} gainNode */
+let gainNode;
 
 /**
+ * Loads the audio file and initializes for later actions.
+ *
  * @param {String} file
  */
 const init = (file) => {
-    window.fetch(file)
-        .then(response => response.arrayBuffer())
-        .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
-        .then(audioBuffer => {
-            buffer = audioBuffer;
-
-            source.buffer = buffer;
-            source.connect(gainNode);
-            source.connect(context.destination);
+    load(context, file)
+        .then(data => {
+            source = data.source;
+            gainNode = data.gainNode;
         });
 }
 
