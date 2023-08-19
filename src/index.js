@@ -25,6 +25,9 @@ const init = (file) => {
         });
 }
 
+/**
+ * Play / Resume the current audio.
+ */
 const play = () => {
     if (hasStarted) {
         context.resume();
@@ -34,19 +37,43 @@ const play = () => {
         hasStarted = true;
     }
 };
+
+/**
+ * Pause the current audio.
+ */
 const pause = () => {
     context.suspend();
 };
+
+/**
+ * Mute the audio, setting it's volumne to 0.
+ */
 const mute = () => {
     originalVolume = volume();
     setVolume(0);
  };
+
+ /**
+ * Unmute the audio, setting it's volume to the previous value it was before muting.
+ */
 const unmute = () => {
     setVolume(originalVolume);
  };
+
+ /**
+ * Set the volume of the audio.
+ *
+ * @param {Number} value
+ */
  const setVolume = (value) => {
     gainNode.gain.value = value;
  }
+
+ /**
+ * Gets the current audio's volume value.
+ *
+ * @returns {Number}
+ */
  const volume = () => {
     return gainNode.gain.value;
  }
