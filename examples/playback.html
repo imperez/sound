@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Example - Playback</title>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="user-scalable=no">
+
+        <script type="module">
+            import * as sound from "./../src/index.js";
+
+            sound.init('./mp3/song-long.mp3');
+            window.playSound = () => {
+                sound.play();
+            }
+            window.pauseSound = () => {
+                sound.pause();
+            }
+
+            /**
+             * @param {Number} value
+             */
+            window.updatePlayback = (value) => {
+                sound.setPlaybackRate(value);
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="playSound()">Play</button>
+        <button onclick="pauseSound()">Pause</button>
+        <button onclick="updatePlayback(1)">1x</button>
+        <button onclick="updatePlayback(1.5)">1.5x</button>
+        <button onclick="updatePlayback(2)">2x</button>
+    </body>
+</html>
