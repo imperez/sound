@@ -67,7 +67,6 @@ const unmute = () => {
 */
 const setVolume = (value) => {
     gainNode.gain.value = value;
-
     console.log(value);
 }
 
