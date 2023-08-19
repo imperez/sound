@@ -51,32 +51,53 @@ const pause = () => {
 const mute = () => {
     originalVolume = volume();
     setVolume(0);
- };
+};
 
- /**
- * Unmute the audio, setting it's volume to the previous value it was before muting.
- */
+/**
+* Unmute the audio, setting it's volume to the previous value it was before muting.
+*/
 const unmute = () => {
     setVolume(originalVolume);
- };
+};
 
- /**
- * Set the volume of the audio.
+/**
+* Set the volume of the audio.
+*
+* @param {Number} value
+*/
+const setVolume = (value) => {
+    gainNode.gain.value = value;
+
+    console.log(value);
+}
+
+/**
+* Gets the current audio's volume value.
+*
+* @returns {Number}
+*/
+const volume = () => {
+    return gainNode.gain.value;
+}
+
+/**
+ * Updates the playback rate for the audio file.
  *
  * @param {Number} value
  */
- const setVolume = (value) => {
-    gainNode.gain.value = value;
- }
+const setPlaybackRate = (value) => {
+    source.playbackRate.value = value.toString();
+}
 
- /**
- * Gets the current audio's volume value.
+/**
+ * Gets the playback rate for the audio file.
  *
- * @returns {Number}
+ * @param {Number} value
  */
- const volume = () => {
-    return gainNode.gain.value;
- }
+const playbackRate = () => {
+    return source.playbackRate.value;
+}
+
 
 export {
     init,
@@ -85,5 +106,7 @@ export {
     mute,
     unmute,
     setVolume,
-    volume
+    volume,
+    setPlaybackRate,
+    playbackRate,
 }
