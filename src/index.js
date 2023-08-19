@@ -46,6 +46,14 @@ const pause = () => {
 };
 
 /**
+ * Stops the current audio from playing.
+ */
+const stop = () => {
+    source.stop();
+    hasStarted = false;
+}
+
+/**
  * Mute the audio, setting it's volumne to 0.
  */
 const mute = () => {
@@ -96,11 +104,24 @@ const playbackRate = () => {
     return source.playbackRate.value;
 }
 
+/**
+ * Clears out the audio file from being used.
+ * Also disconnects any internal audio nodes.
+ */
+const clear = () => {
+    stop();
+
+    source.disconnect();
+    gainNode.disconnect();
+}
+
 
 export {
     init,
+    clear,
     play,
     pause,
+    stop,
     mute,
     unmute,
     setVolume,
