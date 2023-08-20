@@ -9,7 +9,7 @@
  * @param {AudioContext} context
  * @param {String} file
  *
- * @return {LoadData}
+ * @return {Promise<LoadData>}
  */
 export const load = async (context, file) => {
     const gainNode = context.createGain();

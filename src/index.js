@@ -1,131 +1,21 @@
 import { create } from "./context.js";
-import { load } from "./loader.js";
-
-let originalVolume = 1;
-let hasStarted = false;
-
-const context = create();
-
-/** @type {AudioBufferSourceNode} source */
-let source;
-
-/** @type {GainNode} gainNode */
-let gainNode;
+import { load as fetchLoad } from "./loader.js";
+import { Sound } from "./sound.js";
 
 /**
  * Loads the audio file and initializes for later actions.
  *
  * @param {String} file
+ *
+ * @returns {Promise<Sound>}
  */
-const init = (file) => {
-    load(context, file)
-        .then(data => {
-            source = data.source;
-            gainNode = data.gainNode;
+const load = (file) => {
+    const context = create();
+
+    return fetchLoad(context, file)
+        .then(({source, gainNode}) => {
+            return new Sound(context, source, gainNode);
         });
 }
 
-/**
- * Play / Resume the current audio.
- */
-const play = () => {
-    if (hasStarted) {
-        context.resume();
-    }
-    else {
-        source.start();
-        hasStarted = true;
-    }
-};
-
-/**
- * Pause the current audio.
- */
-const pause = () => {
-    context.suspend();
-};
-
-/**
- * Stops the current audio from playing.
- */
-const stop = () => {
-    source.stop();
-    hasStarted = false;
-}
-
-/**
- * Mute the audio, setting it's volumne to 0.
- */
-const mute = () => {
-    originalVolume = volume();
-    setVolume(0);
-};
-
-/**
-* Unmute the audio, setting it's volume to the previous value it was before muting.
-*/
-const unmute = () => {
-    setVolume(originalVolume);
-};
-
-/**
-* Set the volume of the audio.
-*
-* @param {Number} value
-*/
-const setVolume = (value) => {
-    gainNode.gain.value = value;
-}
-
-/**
-* Gets the current audio's volume value.
-*
-* @returns {Number}
-*/
-const volume = () => {
-    return gainNode.gain.value;
-}
-
-/**
- * Updates the playback rate for the audio file.
- *
- * @param {Number} value
- */
-const setPlaybackRate = (value) => {
-    source.playbackRate.value = value.toString();
-}
-
-/**
- * Gets the playback rate for the audio file.
- *
- * @param {Number} value
- */
-const playbackRate = () => {
-    return source.playbackRate.value;
-}
-
-/**
- * Clears out the audio file from being used.
- * Also disconnects any internal audio nodes.
- */
-const clear = () => {
-    stop();
-
-    source.disconnect();
-    gainNode.disconnect();
-}
-
-
-export {
-    init,
-    clear,
-    play,
-    pause,
-    stop,
-    mute,
-    unmute,
-    setVolume,
-    volume,
-    setPlaybackRate,
-    playbackRate,
-}
+export { load, Sound }

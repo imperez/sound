@@ -7,9 +7,10 @@
         <meta name="viewport" content="user-scalable=no">
 
         <script type="module">
-            import * as sound from "./../src/index.js";
+            import { load } from "./../src/index.js";
 
-            sound.init('./mp3/song-long.mp3');
+            const sound = await load('./mp3/song-long.mp3');
+
             window.playSound = () => {
                 sound.play();
             }
