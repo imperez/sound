@@ -1,4 +1,8 @@
-class Sound {
+import { PauseEvent } from "./events/pause";
+import { PlayEvent } from "./events/play";
+import { StopEvent } from "./events/stop";
+
+class Sound extends EventTarget {
     /** @type {AudioContext} context */
     context;
 
@@ -33,6 +37,8 @@ class Sound {
             this.source.start();
             this.hasStarted = true;
         }
+
+        this.dispatchEvent(new PlayEvent());
     };
 
     /**
@@ -40,6 +46,8 @@ class Sound {
      */
     pause() {
         this.context.suspend();
+
+        this.dispatchEvent(new PauseEvent());
     };
 
     /**
@@ -48,6 +56,8 @@ class Sound {
     stop() {
         this.source.stop();
         this.hasStarted = false;
+
+        this.dispatchEvent(new StopEvent());
     }
 
     /**
