@@ -3,12 +3,11 @@
     <head>
         <title>Example - Play</title>
 
-        <meta charset="utf-8">
-        <meta name="viewport" content="user-scalable=no">
+        <meta charset="utf-8" />
+        <meta name="viewport" content="user-scalable=no" />
 
         <script type="module">
-            import { load } from "./../src/index.js";
-
+            import { load } from "../src/index.js";
             const sound = await load('./mp3/ding.mp3');
 
             window.playSound = () => {

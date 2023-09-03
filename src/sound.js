@@ -1,8 +1,11 @@
-import { PauseEvent } from "./events/pause";
-import { PlayEvent } from "./events/play";
-import { StopEvent } from "./events/stop";
+import { PauseEvent } from "./events/pause.js";
+import { PlayEvent } from "./events/play.js";
+import { StopEvent } from "./events/stop.js";
 
 class Sound extends EventTarget {
+    /** @type {HTMLAudioElement} audio */
+    audio;
+
     /** @type {AudioContext} context */
     context;
 
@@ -17,10 +20,18 @@ class Sound extends EventTarget {
 
     /**
      *
+     * @param {HTMLAudioElement} audio
+     */
+    initWithAudio(audio) {
+        this.audio = audio;
+    }
+
+    /**
+     *
      * @param {AudioBufferSourceNode} source
      * @param {GainNode} gainNode
      */
-    constructor(context, source, gainNode) {
+    initWithContext(context, source, gainNode) {
         this.context = context;
         this.source = source;
         this.gainNode = gainNode;
@@ -30,12 +41,17 @@ class Sound extends EventTarget {
      * Play / Resume the current audio.
      */
     play() {
-        if (this.hasStarted) {
-            this.context.resume();
+        if (this.audio) {
+            this.audio.play();
         }
         else {
-            this.source.start();
-            this.hasStarted = true;
+            if (this.hasStarted) {
+                this.context.resume();
+            }
+            else {
+                this.source.start();
+                this.hasStarted = true;
+            }
         }
 
         this.dispatchEvent(new PlayEvent());
@@ -45,7 +61,12 @@ class Sound extends EventTarget {
      * Pause the current audio.
      */
     pause() {
-        this.context.suspend();
+        if (this.audio) {
+            this.audio.pause();
+        }
+        else {
+            this.context.suspend();
+        }
 
         this.dispatchEvent(new PauseEvent());
     };
@@ -54,9 +75,14 @@ class Sound extends EventTarget {
      * Stops the current audio from playing.
      */
     stop() {
-        this.source.stop();
-        this.hasStarted = false;
+        if (this.audio) {
+            this.audio.pause();
+        }
+        else {
+            this.source.stop();
+        }
 
+        this.hasStarted = false;
         this.dispatchEvent(new StopEvent());
     }
 
@@ -81,7 +107,12 @@ class Sound extends EventTarget {
     * @param {Number} value
     */
     setVolume(value) {
-        this.gainNode.gain.value = value;
+        if (this.audio) {
+            this.audio.volume = value;
+        }
+        else {
+            this.gainNode.gain.value = value;
+        }
     }
 
     /**
@@ -90,7 +121,12 @@ class Sound extends EventTarget {
     * @returns {Number}
     */
     volume() {
-        return this.gainNode.gain.value;
+        if (this.audio) {
+            return this.audio.volume;
+        }
+        else {
+            return this.gainNode.gain.value;
+        }
     }
 
     /**
@@ -99,7 +135,12 @@ class Sound extends EventTarget {
      * @param {Number} value
      */
     setPlaybackRate(value) {
-        this.source.playbackRate.value = value;
+        if (this.audio) {
+            this.audio.playbackRate = value;
+        }
+        else {
+            this.source.playbackRate.value = value;
+        }
     }
 
     /**
@@ -108,7 +149,12 @@ class Sound extends EventTarget {
      * @param {Number} value
      */
     playbackRate() {
-        return this.source.playbackRate.value;
+        if (this.audio) {
+            return this.audio.playbackRate;
+        }
+        else {
+            return this.source.playbackRate.value;
+        }
     }
 
     /**
@@ -118,8 +164,13 @@ class Sound extends EventTarget {
     clear() {
         this.stop();
 
-        this.source.disconnect();
-        this.gainNode.disconnect();
+        if (this.audio) {
+            this.audio = null;
+        }
+        else {
+            this.source.disconnect();
+            this.gainNode.disconnect();
+        }
     }
 }
 

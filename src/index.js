@@ -1,5 +1,4 @@
-import { create } from "./context.js";
-import { load as fetchLoad } from "./loader.js";
+import { load as audioLoad } from "./loaders/audio.js";
 import { Sound } from "./sound.js";
 
 /**
@@ -10,11 +9,11 @@ import { Sound } from "./sound.js";
  * @returns {Promise<Sound>}
  */
 const load = (file) => {
-    const context = create();
-
-    return fetchLoad(context, file)
-        .then(({source, gainNode}) => {
-            return new Sound(context, source, gainNode);
+    return audioLoad(file)
+        .then(({audio}) => {
+            const sound = new Sound();
+            sound.initWithAudio(audio);
+            return sound;
         });
 }
 
