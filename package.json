@@ -1,5 +1,5 @@
 {
-  "name": "@imperez/sound",
+  "name": "@perez-rich/sound",
   "version": "1.1.0",
   "description": "A simple library to play sounds",
   "type": "module",
