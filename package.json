@@ -1,7 +1,7 @@
 {
-  "name": "@perez-rich/sound",
+  "name": "@perez-rich/simple-sound",
   "version": "1.1.0",
-  "description": "A simple library to play sounds",
+  "description": "A simple library to play audo files",
   "type": "module",
   "exports": "./src/index.js",
   "engines": {
