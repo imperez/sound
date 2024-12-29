@@ -1,23 +1,20 @@
 {
   "name": "@perez-rich/simple-sound",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "A simple library to play audo files",
   "type": "module",
   "exports": "./src/index.js",
   "engines": {
-    "node": ">=16"
-  },
-  "scripts": {
-    "test": "test"
+    "node": ">=20"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/imperez/sound.git"
+    "url": "git+https://github.com/perez-rich/simple-sound.git"
   },
   "author": "Rich Perez",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/imperez/sound/issues"
+    "url": "https://github.com/perez-rich/simple-sound/issues"
   },
-  "homepage": "https://github.com/imperez/sound#readme"
+  "homepage": "https://github.com/perez-rich/simple-sound#readme"
 }
